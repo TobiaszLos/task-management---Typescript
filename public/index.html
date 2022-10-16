@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+  <script defer src="bundle.js"></script></head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Todo App</title>
-<script defer src="bundle.js"></script></head>
+  <body>
+    <main class="wrapper">
+      <section class="todo-list-container">
+        <div class="todo-list">
+          <ul class="todo-list-box">
+            <li class="list-name" >
+              <span >All</span>
+              <span class="list-count">0</span>
+            </li>
+            <li class="list-name">
+              <span>Next 7 days</span>
+              <span class="list-count">0</span>
+            </li>
+            <li class="list-name" active-list>
+              <span>Today</span>
+              <span class="list-count">0</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <form action="" class="form-list">
+            <input class="add-list-input" placeholder="type your list" type="text" />
+            <button class="add-list-buttom" >Add list</button>
+          </form>
+        </div>
+      </section>
 
-<body>
-	<h1>aaaaaaaaaaaaaqweqweqwaaaaaa 123123 asdsasda asddsaasddasd asdsad assdaaaaa 12312321 </h1>
-	<p>dassadsadas
+      <section class="todo-tasks">
+        <article>
+          <h2 class="todo-tasks-title">Today</h2>
+          <form action="" class="form-tasks">
+            <input class="add-list-input" placeholder="type your list" type="text" />
+           
+          </form>
 
-	</p>
-</body>
-
+          <div>
+            <ul>
+              <li class="todo-task">
+                <span>task name</span>
+                <span>...</span>
+              </li>
+              <li class="todo-task">
+                <span>task name</span>
+                <span>...</span>
+              </li>
+              <li class="todo-task">
+                <span>task name</span>
+                <span>...</span>
+              </li>
+              <li class="todo-task">
+                <span>task name</span>
+                <span>...</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
 </html>

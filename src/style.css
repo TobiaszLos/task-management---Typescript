@@ -1,3 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;500;600;800&display=swap');
+
+:root {
+  --todo-list-actve-background: #8a9acf;
+  --todo-main-background: linear-gradient(135deg, #1f3f87, #f16411);
+  --todo-main-color: #ffffff;
+
+  --main-placeholder: #bfbfbf;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::placeholder {
+  color: var(--main-placeholder);
+ 
+}
+
+li {
+  list-style-type: none;
+}
+
+html {
+  font-size: 10px;
+}
+
 body {
-	background-color: green;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  background: var(--todo-main-background);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.4rem;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 300px 600px;
+
+  padding: 6rem 0;
+  border: 1px solid var(--todo-main-color);
+  min-height: 800px;
+  border-radius: 8px;
+}
+
+.todo-list-container {
+  display: grid;
+  align-content: space-between;
+  border-right: 1px solid #7c7c7c;
+  height: 100%;
+
+  background: var(--todo-list-background);
+  color: var(--todo-list-main-color);
+}
+
+.todo-tasks {
+  margin: 0 6rem;
+}
+
+li[active-list] {
+  background-color: var(--todo-list-actve-background);
+}
+
+.list-name {
+  padding: 1.4rem 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  font-weight: 200;
+
+  font-size: 1.6rem;
+}
+
+.list-count {
+  text-align: right;
+  font-size: 200;
+}
+
+.form-list {
+}
+
+.add-list-input {
+  padding: 0.7rem 1.4rem;
+  background: none;
+  border: 1px solid;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--todo-main-color);
+  color: var(--todo-main-color);
+}
+
+.add-list-buttom {
+  padding: 0.7rem 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  border: 1px solid var(--todo-main-color);
+  color: var(--todo-main-color);
+  background: transparent;
+}
+.todo-list-box {
+  color: var(--todo-main-color);
+}
+
+.todo-tasks-title {
+  font-size: 3.4rem;
+  color: var(--todo-main-color);
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+.add-task-input {
+  padding: 0.7rem 1.4rem;
+  color: #fff;
+  background: transparent;
+  /* border: none; */
+  outline: none;
+  border-radius: 14px;
+  border: 1px solid #fff;
+  margin-bottom: 2rem;
+  min-width: 350px;
 }
