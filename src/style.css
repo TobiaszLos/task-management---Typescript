@@ -63,7 +63,7 @@ body {
   color: var(--todo-list-main-color);
 }
 
-li[active-list] {
+li[active-list], li[active-list]:not(.disable):hover {
   background-color: var(--todo-list-actve-background);
 }
 
@@ -73,6 +73,11 @@ li[active-list] {
   grid-template-columns: repeat(2, 1fr);
   font-weight: 200;
   font-size: 1.6rem;
+}
+
+.list-name:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
 }
 
 .list-count {
@@ -189,10 +194,11 @@ li[active-list] {
   top: 50%;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 150ms ease-in-out;
+  transition: transform 250ms ease-in-out;
 }
 
 .todo-task-checkbox:checked + .checkbox-label-container .task-text::after {
   transform: scaleX(1);
   transform-origin: left;
 }
+
