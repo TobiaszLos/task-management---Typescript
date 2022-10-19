@@ -5,7 +5,7 @@
   --todo-main-background: linear-gradient(135deg, #1f3f87, #f16411);
   --todo-main-color: #ffffff;
 
-  --main-placeholder: #bfbfbf;
+  --main-placeholder: #9e9e9e;
 }
 
 *,
@@ -36,16 +36,22 @@ body {
   font-family: 'Work Sans', sans-serif;
   font-size: 1.4rem;
 }
+/** 
+* GLOBAL WRAPPER  ↴
+*/
 
 .wrapper {
   display: grid;
   grid-template-columns: 300px 600px;
-
   padding: 6rem 0;
   border: 1px solid var(--todo-main-color);
   min-height: 620px;
   border-radius: 8px;
 }
+
+/**
+* TODO LIST SECTION ⇩ ⇩ ⇩ 
+*/
 
 .todo-list-container {
   display: grid;
@@ -57,10 +63,6 @@ body {
   color: var(--todo-list-main-color);
 }
 
-.todo-tasks {
-  margin: 0 6rem;
-}
-
 li[active-list] {
   background-color: var(--todo-list-actve-background);
 }
@@ -70,7 +72,6 @@ li[active-list] {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   font-weight: 200;
-
   font-size: 1.6rem;
 }
 
@@ -100,8 +101,17 @@ li[active-list] {
   color: var(--todo-main-color);
   background: transparent;
 }
+
 .todo-list-box {
   color: var(--todo-main-color);
+}
+
+/**
+* TODO TASKS SECTION ⇩ ⇩ ⇩
+*/
+
+.todo-tasks {
+  margin: 0 6rem;
 }
 
 .todo-tasks-title {
@@ -123,13 +133,20 @@ li[active-list] {
   min-width: 350px;
 }
 
+/* single task (TODO TASKS SECTION ⇩ ⇩ ⇩)*/
 
-/**
-* CUSTOM CHECKBOX 
-*/
+.todo-task {
+  margin-bottom: 10px;
+}
+
+.task-text {
+  position: relative;
+}
+
+/* CUSTOM CHECKBOX  (TODO TASKS SECTION ⇩ ⇩ ⇩) */
 
 .checkbox-label-container {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: 1rem;
@@ -138,7 +155,7 @@ li[active-list] {
 }
 /*[type="checkbox"]*/
 .todo-task-checkbox {
-  position: 0;
+  position: absolute;
   opacity: 0;
 }
 
@@ -163,3 +180,19 @@ li[active-list] {
   opacity: 0.3;
 }
 
+.checkbox-label-container .task-text::after {
+  content: '';
+  border-bottom: 2px solid rgb(255, 255, 255);
+  width: 100%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 150ms ease-in-out;
+}
+
+.todo-task-checkbox:checked + .checkbox-label-container .task-text::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
