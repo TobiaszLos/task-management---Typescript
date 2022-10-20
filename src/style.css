@@ -49,6 +49,29 @@ body {
   border-radius: 8px;
 }
 
+.btn {
+  padding: 0.7rem 1.4rem;
+  background: none;
+  outline: none;
+  border: none;
+  color: var(--todo-main-color);
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: #e3e3e3;
+}
+
+.inputCss {
+  padding: 0.7rem 1.4rem;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--todo-main-color);
+  color: var(--todo-main-color);
+  
+}
+
 /**
 * TODO LIST SECTION ⇩ ⇩ ⇩ 
 */
@@ -63,7 +86,8 @@ body {
   color: var(--todo-list-main-color);
 }
 
-li[active-list], li[active-list]:not(.disable):hover {
+li[active-list],
+li[active-list]:not(.disable):hover {
   background-color: var(--todo-list-actve-background);
 }
 
@@ -76,7 +100,7 @@ li[active-list], li[active-list]:not(.disable):hover {
 }
 
 .list-name:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
@@ -88,23 +112,20 @@ li[active-list], li[active-list]:not(.disable):hover {
 .form-list {
 }
 
-.add-list-input {
-  padding: 0.7rem 1.4rem;
+.inputCss.add-list-input {
+  /* padding: 0.7rem 1.4rem;
   background: none;
-  border: 1px solid;
   outline: none;
   border: none;
   border-bottom: 1px solid var(--todo-main-color);
-  color: var(--todo-main-color);
+  color: var(--todo-main-color); */
+  
 }
 
-.add-list-buttom {
-  padding: 0.7rem 1.4rem;
+.btn.add-list-buttom {
   font-weight: 500;
   letter-spacing: 0.4px;
   border: 1px solid var(--todo-main-color);
-  color: var(--todo-main-color);
-  background: transparent;
 }
 
 .todo-list-box {
@@ -117,6 +138,13 @@ li[active-list], li[active-list]:not(.disable):hover {
 
 .todo-tasks {
   margin: 0 6rem;
+  display: grid;
+}
+
+.todo-tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .todo-tasks-title {
@@ -126,16 +154,25 @@ li[active-list], li[active-list]:not(.disable):hover {
   margin-bottom: 2rem;
 }
 
-.add-task-input {
-  padding: 0.7rem 1.4rem;
+.todo-tasks-count {
+  color: #e7e7e7;
+  letter-spacing: 0.3px;
+}
+
+.inputCss.add-task-input {
+  /* padding: 0.7rem 1.4rem;
   color: #fff;
   background: transparent;
   /* border: none; */
-  outline: none;
+  /*outline: none;
   border-radius: 14px;
   border: 1px solid #fff;
   margin-bottom: 2rem;
-  min-width: 350px;
+  min-width: 350px; */
+}
+
+.todo-tasks-buttons-container {
+  align-self: end;
 }
 
 /* single task (TODO TASKS SECTION ⇩ ⇩ ⇩)*/
@@ -201,4 +238,3 @@ li[active-list], li[active-list]:not(.disable):hover {
   transform: scaleX(1);
   transform-origin: left;
 }
-
