@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Todo App</title>
   </head>
 
@@ -11,7 +12,7 @@
     <main class="wrapper">
       <section class="todo-list-container">
         <div class="todo-list">
-          <ul class="todo-list-box">
+          <ul class="todo-list-box" data-todo-list-container>
             <li class="list-name">
               <span>All</span>
               <span class="list-count">0</span>
@@ -27,8 +28,9 @@
           </ul>
         </div>
         <div>
-          <form action="" class="form-list">
+          <form action="" class="form-list" data-todo-form>
             <input
+              data-input-list
               class="inputCss add-list-input"
               placeholder="type your list"
               type="text"

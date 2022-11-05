@@ -4,16 +4,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
     <title>Todo App</title>
   <script defer src="bundle.js"></script></head>
 
   <body>
     <main class="wrapper">
       <section class="todo-list-container">
-        <div class="todo-list">
+        <div class="todo-list" data-todo-list-container>
           <ul class="todo-list-box">
-            <li class="list-name" >
-              <span >All</span>
+            <li class="list-name">
+              <span>All</span>
               <span class="list-count">0</span>
             </li>
             <li class="list-name">
@@ -28,41 +29,76 @@
         </div>
         <div>
           <form action="" class="form-list">
-            <input class="add-list-input" placeholder="type your list" type="text" />
-            <button class="add-list-buttom" >Add list</button>
+            <input
+              class="inputCss add-list-input"
+              placeholder="type your list"
+              type="text"
+            />
+            <button class="btn add-list-buttom">Add list</button>
           </form>
         </div>
       </section>
 
       <section class="todo-tasks">
-        <article>
+        <div class="todo-tasks-header">
           <h2 class="todo-tasks-title">Today</h2>
-          <form action="" class="form-tasks">
-            <input class="add-list-input" placeholder="type your list" type="text" />
-           
-          </form>
+          <span class="todo-tasks-count">0 tasks left</span>
+        </div>
 
-          <div>
-            <ul>
-              <li class="todo-task">
-                <span>task name</span>
-                <span>...</span>
-              </li>
-              <li class="todo-task">
-                <span>task name</span>
-                <span>...</span>
-              </li>
-              <li class="todo-task">
-                <span>task name</span>
-                <span>...</span>
-              </li>
-              <li class="todo-task">
-                <span>task name</span>
-                <span>...</span>
-              </li>
-            </ul>
+        <form action="" class="form-tasks">
+          <input
+            class="inputCss add-task-input"
+            placeholder="add new task"
+            type="text"
+          />
+        </form>
+
+        <div class="tasks-box">
+          <!-- task1 -->
+          <div class="todo-task">
+            <input
+              class="todo-task-checkbox"
+              type="checkbox"
+              name=""
+              id="todo1"
+            />
+            <label class="checkbox-label-container" for="todo1">
+              <span class="custom-checkbox"></span>
+              <span class="task-text"> Lorem, ipsum dolor.1 </span>
+            </label>
           </div>
-        </article>
+
+          <!-- task2 -->
+          <div class="todo-task">
+            <input
+              class="todo-task-checkbox"
+              type="checkbox"
+              name=""
+              id="todo2"
+            />
+            <label class="checkbox-label-container" for="todo2">
+              <span class="custom-checkbox"></span>
+              <span class="task-text"> Lorem, ipsum dolor.2</span>
+            </label>
+          </div>
+          <!-- task3 -->
+          <div class="todo-task">
+            <input
+              class="todo-task-checkbox"
+              type="checkbox"
+              name=""
+              id="todo3"
+            />
+            <label class="checkbox-label-container" for="todo3">
+              <span class="custom-checkbox"></span>
+              <span class="task-text">Lorem, ipsum dolor.3 </span>
+            </label>
+          </div>
+        </div>
+        <div class="todo-tasks-buttons-container">
+          <button class="btn">clear completed</button>
+          <button class="btn">delete selected list</button>
+        </div>
       </section>
     </main>
   </body>
