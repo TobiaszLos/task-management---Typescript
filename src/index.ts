@@ -2,8 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { id } from './helpers/id'
 
-console.log(typeof uuidv4(), 'aaa')
-
 let x = uuidv4()
 
 //////////////// LIST TODOS ///////////////////
@@ -35,26 +33,27 @@ type ListTask = {
 
 let selectedTodoListTask: string
 
-
-
 const LOCAL_STORAGE_SELECTED_TODO = 'selected_todo'
 const LOCAL_STORAGE_TODOS_LIST = 'todos_list'
 
 const dbAllTodos = localStorage.getItem(LOCAL_STORAGE_TODOS_LIST)!
 
-console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!), 'aaa')
+// console.log(
+//   JSON.parse(localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!),
+//   'aaa'
+// )
 
-
-
-selectedTodoListTask = JSON.parse(localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!)
+selectedTodoListTask = JSON.parse(
+  localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!
+)
 
 let todos: ListTask[] = JSON.parse(dbAllTodos) || []
 
 let testTodo: ListTask = {
-  name: 'test Task',
+  name: 'oiad',
   count: 0,
   id: uuidv4(),
-  tasks: [{ name: 'TO JEST TESTOWY TASK', id: uuidv4(), completed: false }]
+  tasks: [ { name: 'jesc owoce', id: uuidv4(), completed: false }]
 }
 
 const todosList: ListTask[] = [...todos]
@@ -66,6 +65,15 @@ const render = () => {
   todosList.forEach(task => {
     renderTodoList(todoListUlElement, task)
   })
+
+  console.log(selectedTodoListTask)
+
+  const selectedTodo = todosList.find(todo => todo.id === selectedTodoListTask)
+
+  todoListTasksElement.innerHTML = ''
+  if (selectedTodo?.tasks !== undefined) {
+    renderTodoListTasks(selectedTodo?.tasks, todoListTasksElement)
+  }
 }
 
 /** TODO LIST ----- ↓ */
@@ -99,8 +107,8 @@ todoListUlElement.addEventListener('click', (e: MouseEvent) => {
     )
   }
 
-  console.log(target.dataset.listTodoId, id())
-  console.log('listTodoId', selectedTodoListTask)
+  // console.log(target.dataset.listTodoId, id())
+  // console.log('listTodoId', selectedTodoListTask)
 })
 
 const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
@@ -115,25 +123,25 @@ const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
 
   if (task.id === selectedTodoListTask) {
     LiElement.setAttribute('active-list', '')
-  
   } else {
-    console.log('nie rowna sie')
-    console.log({task, selectedTodoListTask})
+    // console.log('nie rowna sie')
+    // console.log({ task, selectedTodoListTask })
   }
 
   parent.appendChild(LiElement)
 }
 
 const saveToLocalStorage = (todos: ListTask[]) => {
-  console.log('HI')
   localStorage.setItem(LOCAL_STORAGE_TODOS_LIST, JSON.stringify(todos))
-
 }
 
 /** TODO LIST TASKS ----- ↓ */
 
 const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
+  console.log(todoTask, 'asdasd')
+
   todoTask.forEach((task, id) => {
+    console.log(task, 'TASK!!')
     const contentTemplate = `
     <input
       class="todo-task-checkbox"
@@ -150,6 +158,8 @@ const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
     containerElement.innerHTML = contentTemplate
     container.append(containerElement)
   })
+
+  console.log(container)
 }
 
 /** TODO LIST TASKS----- ↑ */
