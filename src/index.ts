@@ -22,6 +22,16 @@ const todoListTasksElement = document.querySelector(
   '[data-tasks-container]'
 ) as HTMLElement
 
+/// ADD TASK
+
+const addTaskInputElement = document.querySelector(
+  '[data-add-task-input]'
+) as HTMLInputElement
+
+const addTaskFormElement = document.querySelector(
+  '[data-add-task-form]'
+) as HTMLFormElement
+
 type Task = { name: string; id: string; completed: false }
 
 type ListTask = {
@@ -38,23 +48,11 @@ const LOCAL_STORAGE_TODOS_LIST = 'todos_list'
 
 const dbAllTodos = localStorage.getItem(LOCAL_STORAGE_TODOS_LIST)!
 
-// console.log(
-//   JSON.parse(localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!),
-//   'aaa'
-// )
-
 selectedTodoListTask = JSON.parse(
   localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!
 )
 
 let todos: ListTask[] = JSON.parse(dbAllTodos) || []
-
-let testTodo: ListTask = {
-  name: 'oiad',
-  count: 0,
-  id: uuidv4(),
-  tasks: [ { name: 'jesc owoce', id: uuidv4(), completed: false }]
-}
 
 const todosList: ListTask[] = [...todos]
 
@@ -65,8 +63,6 @@ const render = () => {
   todosList.forEach(task => {
     renderTodoList(todoListUlElement, task)
   })
-
-  console.log(selectedTodoListTask)
 
   const selectedTodo = todosList.find(todo => todo.id === selectedTodoListTask)
 
@@ -83,7 +79,8 @@ todoListFormElement.addEventListener('submit', (e: Event) => {
   const task = {
     name: todoListInputElement.value,
     count: 0,
-    id: uuidv4()
+    id: uuidv4(),
+    tasks: []
   }
 
   todosList.push(task)
@@ -106,9 +103,6 @@ todoListUlElement.addEventListener('click', (e: MouseEvent) => {
       JSON.stringify(selectedTodoListTask)
     )
   }
-
-  // console.log(target.dataset.listTodoId, id())
-  // console.log('listTodoId', selectedTodoListTask)
 })
 
 const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
@@ -137,9 +131,27 @@ const saveToLocalStorage = (todos: ListTask[]) => {
 
 /** TODO LIST TASKS ----- ↓ */
 
-const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
-  console.log(todoTask, 'asdasd')
+addTaskFormElement.addEventListener('submit', e => {
+  e.preventDefault()
 
+  const taskName = addTaskInputElement.value
+  const activeList = todosList.find(todo => todo.id === selectedTodoListTask)
+
+  const task: Task = {
+    name: taskName,
+    id: uuidv4(),
+    completed: false
+  }
+
+  if (activeList?.tasks !== undefined) {
+    activeList.tasks.push(task)
+  }
+
+  render()
+  saveToLocalStorage(todosList)
+})
+
+const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
   todoTask.forEach((task, id) => {
     console.log(task, 'TASK!!')
     const contentTemplate = `
@@ -158,8 +170,6 @@ const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
     containerElement.innerHTML = contentTemplate
     container.append(containerElement)
   })
-
-  console.log(container)
 }
 
 /** TODO LIST TASKS----- ↑ */
