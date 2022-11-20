@@ -99,6 +99,10 @@ li[active-list]:not(.disable):hover {
   font-size: 1.6rem;
 }
 
+.list-name span {
+  pointer-events: none; 
+}
+
 .list-name:hover {
   background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -238,3 +242,6 @@ li[active-list]:not(.disable):hover {
   transform: scaleX(1);
   transform-origin: left;
 }
+
+
+
