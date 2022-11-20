@@ -1,9 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { id } from './helpers/id'
-
-let x = uuidv4()
-
 //////////////// LIST TODOS ///////////////////
 const todoListUlElement = document.querySelector(
   '[data-todo-list-container]'
@@ -22,6 +18,13 @@ const todoListTasksElement = document.querySelector(
   '[data-tasks-container]'
 ) as HTMLElement
 
+const taskListElement = document.querySelector(
+  '.todo-tasks-title'
+) as HTMLElement
+const countListElement = document.querySelector(
+  '.todo-tasks-count'
+) as HTMLElement
+
 /// ADD TASK
 
 const addTaskInputElement = document.querySelector(
@@ -32,11 +35,14 @@ const addTaskFormElement = document.querySelector(
   '[data-add-task-form]'
 ) as HTMLFormElement
 
-type Task = { name: string; id: string; completed: false }
-
-type ListTask = {
+interface Task {
   name: string
-  count: number
+  id: string
+  completed: false
+}
+
+interface ListTask {
+  name: string
   id: string
   tasks?: Task[]
 }
@@ -69,23 +75,26 @@ const render = () => {
   todoListTasksElement.innerHTML = ''
   if (selectedTodo?.tasks !== undefined) {
     renderTodoListTasks(selectedTodo?.tasks, todoListTasksElement)
+    setTodoListCount(selectedTodo?.tasks?.length, countListElement)
   }
+
+  setTodoListTitle(selectedTodo?.name!, taskListElement)
+  saveToLocalStorage(todosList)
 }
 
 /** TODO LIST ----- ↓ */
 todoListFormElement.addEventListener('submit', (e: Event) => {
   e.preventDefault()
 
-  const task = {
+  const taskList = {
     name: todoListInputElement.value,
-    count: 0,
     id: uuidv4(),
     tasks: []
   }
 
-  todosList.push(task)
+  todosList.push(taskList)
 
-  renderTodoList(todoListUlElement, task)
+  renderTodoList(todoListUlElement, taskList)
   saveToLocalStorage(todosList)
 
   todoListInputElement.value = ''
@@ -110,7 +119,7 @@ const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
   LiElement.classList.add('list-name')
   LiElement.innerHTML = `
       <span>${task.name}</span>
-      <span class="list-count">${task.count}</span>
+      <span class="list-count">${task.tasks?.length}</span>
     `
   //data-list-todo-id
   LiElement.dataset.listTodoId = task.id
@@ -170,6 +179,14 @@ const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
     containerElement.innerHTML = contentTemplate
     container.append(containerElement)
   })
+}
+
+const setTodoListTitle = (title: string, element: HTMLElement) => {
+  element.innerText = title
+}
+
+const setTodoListCount = (count: number, element: HTMLElement) => {
+  element.innerHTML = `${count.toString()} tasks left`
 }
 
 /** TODO LIST TASKS----- ↑ */
