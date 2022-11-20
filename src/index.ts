@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { ListTask, Task } from './types'
 
 //////////////// LIST TODOS ///////////////////
 const todoListUlElement = document.querySelector(
@@ -35,17 +36,6 @@ const addTaskFormElement = document.querySelector(
   '[data-add-task-form]'
 ) as HTMLFormElement
 
-interface Task {
-  name: string
-  id: string
-  completed: false
-}
-
-interface ListTask {
-  name: string
-  id: string
-  tasks?: Task[]
-}
 
 let selectedTodoListTask: string
 
@@ -126,10 +116,7 @@ const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
 
   if (task.id === selectedTodoListTask) {
     LiElement.setAttribute('active-list', '')
-  } else {
-    // console.log('nie rowna sie')
-    // console.log({ task, selectedTodoListTask })
-  }
+  } 
 
   parent.appendChild(LiElement)
 }
