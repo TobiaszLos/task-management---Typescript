@@ -1,6 +1,14 @@
 import { v4 as uuidv4 } from 'uuid'
 import { ListTask, Task } from './types'
 
+const deleteListElement = document.querySelector(
+  '[data-delete-list]'
+) as HTMLButtonElement
+
+const clearCompletedTaskEl = document.querySelector(
+  '[data-clear-completed-tasks]'
+) as HTMLButtonElement
+
 //////////////// LIST TODOS ///////////////////
 const todoListUlElement = document.querySelector(
   '[data-todo-list-container]'
@@ -35,7 +43,6 @@ const addTaskInputElement = document.querySelector(
 const addTaskFormElement = document.querySelector(
   '[data-add-task-form]'
 ) as HTMLFormElement
-
 
 let selectedTodoListTask: string
 
@@ -116,7 +123,7 @@ const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
 
   if (task.id === selectedTodoListTask) {
     LiElement.setAttribute('active-list', '')
-  } 
+  }
 
   parent.appendChild(LiElement)
 }
@@ -149,21 +156,34 @@ addTaskFormElement.addEventListener('submit', e => {
 
 const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
   todoTask.forEach((task, id) => {
-    console.log(task, 'TASK!!')
-    const contentTemplate = `
-    <input
-      class="todo-task-checkbox"
-      type="checkbox"
-      name=""
-      id="${id}-${task.name}"
-    />
-    <label class="checkbox-label-container" for="${id}-${task.name}">
-      <span class="custom-checkbox"></span>
-      <span class="task-text"> ${task.name}</span>
-    </label>
-    `
+    const inputEl = document.createElement('input')
+    inputEl.type = 'checkbox'
+    inputEl.name = ''
+    inputEl.setAttribute('id', `${id}-${task.name}`)
+    inputEl.setAttribute('class', 'todo-task-checkbox')
+    inputEl.checked = task.completed
+
+    const labelEl = document.createElement('label')
+    labelEl.setAttribute('class', 'checkbox-label-container')
+    labelEl.setAttribute('for', `${id}-${task.name}`)
+
+    labelEl.onclick = () => {
+      task.completed = !task.completed
+      saveToLocalStorage(todos)
+    }
+
+    const customSpan = document.createElement('span')
+    customSpan.setAttribute('class', 'custom-checkbox')
+
+    const span = document.createElement('span')
+    span.setAttribute('class', 'task-text')
+    span.innerText = task.name
+
+    labelEl.append(customSpan, span)
+
     const containerElement = document.createElement('div')
-    containerElement.innerHTML = contentTemplate
+    containerElement.append(inputEl, labelEl)
+
     container.append(containerElement)
   })
 }
@@ -176,6 +196,50 @@ const setTodoListCount = (count: number, element: HTMLElement) => {
   element.innerHTML = `${count.toString()} tasks left`
 }
 
-/** TODO LIST TASKS----- ↑ */
+/** TODO LIST TASKS  ----- ↑ */
+// TOOLS
+const clearUpcompletedTasks = () => {
+  todosList.find(list => {
+    if (list.id !== selectedTodoListTask) return
+
+    const chj = list.tasks?.filter(task => task.completed === false)
+    list.tasks = chj
+
+    render()
+  })
+}
+
+const deleteList = () => {
+  const newState = todosList.find(
+    list => list.id === selectedTodoListTask
+  ) as ListTask
+
+  newState.tasks = []
+
+  render()
+}
+
+deleteListElement.addEventListener('click', () => {
+  deleteList()
+})
+
+clearCompletedTaskEl.addEventListener('click', () => {
+  clearUpcompletedTasks()
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 render()
