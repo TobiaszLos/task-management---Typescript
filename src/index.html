@@ -11,7 +11,7 @@
   <body>
     <main class="wrapper">
       <section class="todo-list-container">
-        <div class="todo-list" >
+        <div class="todo-list">
           <ul class="todo-list-box" data-todo-list-container>
             <li class="list-name" data-list-todo-id>
               <span>All</span>
@@ -46,7 +46,7 @@
           <span class="todo-tasks-count">0 tasks left</span>
         </div>
 
-        <form action="" class="form-tasks"  data-add-task-form>
+        <form action="" class="form-tasks" data-add-task-form>
           <input
             class="inputCss add-task-input"
             data-add-task-input
@@ -98,8 +98,10 @@
           </div> -->
         </div>
         <div class="todo-tasks-buttons-container">
-          <button class="btn">clear up completed tasks</button>
-          <button class="btn">delete selected list</button>
+          <button data-clear-completed-tasks class="btn">
+            clear up completed tasks
+          </button>
+          <button data-delete-list class="btn">delete list</button>
         </div>
       </section>
     </main>

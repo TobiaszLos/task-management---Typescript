@@ -1,10 +1,10 @@
 export interface Task {
   name: string
   id: string
-  completed: false
+  completed: boolean
 }
 
-export interface ListTask {
+export type ListTask = {
   name: string
   id: string
   tasks?: Task[]
