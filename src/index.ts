@@ -55,9 +55,9 @@ selectedTodoListTask = JSON.parse(
   localStorage.getItem(LOCAL_STORAGE_SELECTED_TODO)!
 )
 
-let todos: ListTask[] = JSON.parse(dbAllTodos) || []
+const todos: ListTask[] = JSON.parse(dbAllTodos) || []
 
-const todosList: ListTask[] = [...todos]
+let todosList: ListTask[] = [...todos]
 
 /** START APP ----- */
 const render = () => {
@@ -129,7 +129,7 @@ const renderTodoList = (parent: HTMLUListElement, task: ListTask) => {
 }
 
 const saveToLocalStorage = (todos: ListTask[]) => {
-  localStorage.setItem(LOCAL_STORAGE_TODOS_LIST, JSON.stringify(todos))
+  localStorage.setItem(LOCAL_STORAGE_TODOS_LIST, JSON.stringify(todosList))
 }
 
 /** TODO LIST TASKS ----- ↓ */
@@ -169,7 +169,7 @@ const renderTodoListTasks = (todoTask: Task[], container: HTMLElement) => {
 
     labelEl.onclick = () => {
       task.completed = !task.completed
-      saveToLocalStorage(todos)
+      saveToLocalStorage(todosList)
     }
 
     const customSpan = document.createElement('span')
@@ -210,11 +210,20 @@ const clearUpcompletedTasks = () => {
 }
 
 const deleteList = () => {
-  const newState = todosList.find(
-    list => list.id === selectedTodoListTask
-  ) as ListTask
+  const selectedTodo = todosList.find((list, index) => {
+    return list.id === selectedTodoListTask
+  }) as ListTask
 
-  newState.tasks = []
+  const newState = todosList.filter(
+    (task) => task.id !== selectedTodo.id
+  )
+
+  todosList = newState
+  selectedTodoListTask = newState[newState.length - 1].id
+  localStorage.setItem(
+    LOCAL_STORAGE_SELECTED_TODO,
+    JSON.stringify(newState[newState.length - 1].id)
+  )
 
   render()
 }
@@ -226,20 +235,5 @@ deleteListElement.addEventListener('click', () => {
 clearCompletedTaskEl.addEventListener('click', () => {
   clearUpcompletedTasks()
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 render()
