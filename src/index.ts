@@ -148,6 +148,7 @@ addTaskFormElement.addEventListener('submit', e => {
 
   if (activeList?.tasks !== undefined) {
     activeList.tasks.push(task)
+    addTaskInputElement.value = ''
   }
 
   render()
