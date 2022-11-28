@@ -1,6 +1,14 @@
 import { ListItem } from './ListItem'
 
-export class FullList {
+interface List {
+  list: ListItem[]
+  save(): void
+  clearList(): void
+  addItem(item: ListItem): void
+  removeItem(id: string): void
+}
+
+export class FullList implements List {
   static instance: FullList = new FullList()
 
   constructor (private _list: ListItem[] = []) {}
@@ -15,6 +23,10 @@ export class FullList {
       const newListObj = new ListItem(obj.id, obj.item, obj.tasks)
       FullList.instance.addItem(newListObj)
     })
+  }
+
+  get list (): ListItem[] {
+    return this._list
   }
 
   save () {
