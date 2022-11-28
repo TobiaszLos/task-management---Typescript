@@ -1,4 +1,3 @@
-
 import { ListItem } from './ListItem'
 
 export class FullList {
@@ -18,19 +17,22 @@ export class FullList {
     })
   }
 
-  save() {
-    localStorage.setItem("myTodoList", JSON.stringify(this._list))
+  save () {
+    localStorage.setItem('myTodoList', JSON.stringify(this._list))
   }
 
-  clearList() {
+  clearList () {
     this._list = []
+    this.save()
   }
 
-  addItem(item: ListItem) {
+  addItem (item: ListItem) {
     this._list.push(item)
+    this.save()
   }
 
-  removeItem(id:string) {
-    return this._list.filter(item => item.id !== id)
+  removeItem (id: string) {
+    this._list.filter(item => item.id !== id)
+    this.save()
   }
 }
