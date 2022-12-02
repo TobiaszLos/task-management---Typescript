@@ -8,8 +8,8 @@ interface List {
   clearList(): void
   addItem(item: ListItem): void
   removeItem(id: string): void
-  saveSelectedItem(id: string): void
-  setSelectedItem(id: string): void
+  // saveSelectedItem(id: string): void
+ // setSelectedItem(id: string): void
 }
 
 type ListItemObj = { _id: string; _item: string; _tasks: TaskItem[] }
@@ -18,6 +18,7 @@ export class FullList implements List {
   static instance: FullList = new FullList()
 
   _selectedItem: string = localStorage.getItem('mySelectedItem')!
+  _curretList: ListItem = new ListItem()
 
   constructor (private _list: ListItem[] = []) {}
 
@@ -31,10 +32,15 @@ export class FullList implements List {
       const newListObj = new ListItem(obj._id, obj._item, obj._tasks)
       FullList.instance.addItem(newListObj)
     })
+    this.setCurrentList(this._selectedItem)
   }
 
   get list (): ListItem[] {
     return this._list
+  }
+
+  get currentList (): ListItem {
+    return this._curretList
   }
 
   get selectedItem (): string {
@@ -64,14 +70,20 @@ export class FullList implements List {
     this.saveList()
   }
 
-  setSelectedItem (id: string) {
-    this._selectedItem = id
+  setItemAndCurrentList (id: string) {
     this.saveSelectedItem(id)
+    this._selectedItem = id
+    this.setCurrentList(id)
+  }
+
+  setCurrentList (id: string) {
+    const currentList = this._list.find(item => item.id === id)
+
+    if (!currentList) return
+    this._curretList = currentList
   }
 
   addTaskToList (task: TaskItem) {
-    const currentList = this._list.find(item => item.id === this._selectedItem)
-    currentList?.tasks.push(task)
-    this.saveList()
+    this._curretList.tasks.push(task)
   }
 }
