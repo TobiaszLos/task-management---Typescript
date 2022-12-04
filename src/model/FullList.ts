@@ -4,15 +4,20 @@ import { TaskItem } from './TaskItem'
 interface List {
   list: ListItem[]
   selectedItem: string
+  currentList: ListItem
   saveList(): void
   clearList(): void
   addItem(item: ListItem): void
   removeItem(id: string): void
-  // saveSelectedItem(id: string): void
- // setSelectedItem(id: string): void
+  setCurrentList(id: string): void
+  setItemAndCurrentList(id: string): void
+  addTaskToList(task: TaskItem): void
+  saveSelectedItem(id: string): void
 }
 
-type ListItemObj = { _id: string; _item: string; _tasks: TaskItem[] }
+// types data from LOCAL STORAGE ↓
+export type taskItemObj = { _id: string; _name: string; _completed: boolean }
+export type ListItemObj = { _id: string; _item: string; _tasks: taskItemObj[] }
 
 export class FullList implements List {
   static instance: FullList = new FullList()
@@ -29,8 +34,15 @@ export class FullList implements List {
     const parsedList: ListItemObj[] = JSON.parse(storedList)
 
     parsedList.forEach(obj => {
-      const newListObj = new ListItem(obj._id, obj._item, obj._tasks)
-      FullList.instance.addItem(newListObj)
+      // change Local storage type data(taskItemObj)
+      // to TaskItem type model
+      const newTaskItem: TaskItem[] = []
+      obj._tasks.forEach(task => {
+        newTaskItem.push(new TaskItem(task._id, task._name, task._completed))
+      })
+
+      const newListItem = new ListItem(obj._id, obj._item, newTaskItem)
+      this.addItem(newListItem)
     })
     this.setCurrentList(this._selectedItem)
   }
@@ -73,17 +85,16 @@ export class FullList implements List {
   setItemAndCurrentList (id: string) {
     this.saveSelectedItem(id)
     this._selectedItem = id
-    this.setCurrentList(id)
   }
 
   setCurrentList (id: string) {
-    const currentList = this._list.find(item => item.id === id)
-
-    if (!currentList) return
+    const currentList = this._list.find(item => item.id === id)!
     this._curretList = currentList
   }
 
   addTaskToList (task: TaskItem) {
     this._curretList.tasks.push(task)
+    this.saveList()
+    console.log(this._list)
   }
 }

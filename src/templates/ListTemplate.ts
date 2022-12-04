@@ -28,7 +28,7 @@ export class ListTemplate implements DOMList {
 
   render (fullList: FullList) {
     this.clear()
-    console.log({ ...fullList }, 'LOG Z render(fullList: FullList)')
+
     fullList.list.forEach(item => {
       const LiElement = document.createElement('li')
       LiElement.classList.add('list-name')
@@ -43,13 +43,16 @@ export class ListTemplate implements DOMList {
         fullList.setItemAndCurrentList(item.id)
         this.render(fullList)
 
-        // fullList.addTaskToList(new TaskItem('123fff','sniadanie', false))
-
+        //   fullList.addTaskToList(new TaskItem('123fff','sniadanie', false))
       })
 
       if (item.id === fullList._selectedItem) {
         LiElement.setAttribute('active-list', '')
       }
+
+      const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
+      h2.innerText = item.item
+
       this.ul.appendChild(LiElement)
     })
   }
