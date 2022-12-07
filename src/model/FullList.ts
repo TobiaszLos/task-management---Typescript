@@ -85,6 +85,7 @@ export class FullList implements List {
   setItemAndCurrentList (id: string) {
     this.saveSelectedItem(id)
     this._selectedItem = id
+    this._curretList = this._list.find(item => item.id === id)!
   }
 
   setCurrentList (id: string) {
@@ -95,6 +96,5 @@ export class FullList implements List {
   addTaskToList (task: TaskItem) {
     this._curretList.tasks.push(task)
     this.saveList()
-    console.log(this._list)
   }
 }

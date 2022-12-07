@@ -32,13 +32,6 @@ const initApp = (): void => {
     templateList.render(fullList)
   })
 
-
-
-  const taskItemLog = new TaskItem()
-  const listItemLog = new ListItem()
-  console.log({ fullList })
-  console.log(new TaskItem('123fff', 'sniadanie', false), 'm,ain')
-
   const addTaskToListForm = document.querySelector(
     '[data-add-task-form]'
   ) as HTMLFormElement
@@ -52,20 +45,15 @@ const initApp = (): void => {
     fullList.addTaskToList(
       new TaskItem(uuidv4().slice(0, 6), inputAddTask.value, false)
     )
-    console.log('click',)
-    
   })
 
+  // load data from local storage to stateP
+  fullList.load()
+  // render template base on local stroage data
+  templateList.render(fullList)
 
-
-
-    // load data from local storage to stateP
-    fullList.load()
-    // render template base on local stroage data
-    templateList.render(fullList)
-  
-    templateTasks.render(fullList._curretList)
-
+  templateTasks.render(fullList._curretList)
 }
 
 document.addEventListener('DOMContentLoaded', initApp)
+

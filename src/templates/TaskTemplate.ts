@@ -13,9 +13,7 @@ export class TaskTemplate {
   }
 
   render (tasksList: ListItem) {
-    //console.log(tasksList, 'task')
     tasksList.tasks.forEach((task, id) => {
-      //console.log(task, 'task -------')
       const inputEl = document.createElement('input')
       inputEl.type = 'checkbox'
       inputEl.name = ''
@@ -30,8 +28,6 @@ export class TaskTemplate {
       labelEl.onclick = () => {
         task.completed = !task.completed
         // saveToLocalStorage(todosList)
-     
-        //console.log('TASK', task)
       }
 
       const customSpan = document.createElement('span')
@@ -45,8 +41,6 @@ export class TaskTemplate {
 
       const containerElement = document.createElement('div')
       containerElement.append(inputEl, labelEl)
-
-
 
       this.ul.append(containerElement)
     })

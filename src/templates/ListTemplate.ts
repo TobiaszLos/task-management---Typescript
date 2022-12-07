@@ -43,15 +43,20 @@ export class ListTemplate implements DOMList {
         fullList.setItemAndCurrentList(item.id)
         this.render(fullList)
 
-        //   fullList.addTaskToList(new TaskItem('123fff','sniadanie', false))
+        console.log(fullList, 'listTemplate-Click')
+
+
+        const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
+        h2.innerText = item.item
+
+        // fullList.addTaskToList(new TaskItem('123fff','sniadanie', false))
       })
 
       if (item.id === fullList._selectedItem) {
         LiElement.setAttribute('active-list', '')
       }
 
-      const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
-      h2.innerText = item.item
+  
 
       this.ul.appendChild(LiElement)
     })
