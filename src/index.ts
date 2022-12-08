@@ -1,22 +1,21 @@
-import { FullList } from './model/FullList'
+import { State } from './model/state'
 import { ListItem } from './model/ListItem'
 import { TaskItem } from './model/TaskItem'
 import { ListTemplate } from './templates/ListTemplate'
-
-import { v4 as uuidv4 } from 'uuid'
 import { TaskTemplate } from './templates/TaskTemplate'
+import { v4 as uuidv4 } from 'uuid'
 
 const initApp = (): void => {
-  const fullList = FullList.instance // local storage full list
+  const state = State.instance // local storage full list
   const templateList = ListTemplate.instance
   const templateTasks = TaskTemplate.instante
 
   // Add new item to list of todos
-  const addListForm = document.querySelector(
+  const addListFormElement = document.querySelector(
     '[data-todo-form]'
   ) as HTMLFormElement
 
-  addListForm.addEventListener('submit', e => {
+  addListFormElement.addEventListener('submit', e => {
     e.preventDefault()
 
     const inputList = document.querySelector(
@@ -26,34 +25,40 @@ const initApp = (): void => {
     const inputValue = inputList.value.trim()
     if (!inputValue.length) return
 
-    fullList.addItem(new ListItem(uuidv4().slice(0, 6), inputValue, []))
+    state.addItem(new ListItem(uuidv4().slice(0, 6), inputValue, []))
     inputList.value = ''
 
-    templateList.render(fullList)
+    templateList.render(state)
   })
 
-  const addTaskToListForm = document.querySelector(
+  const addTaskToListElement = document.querySelector(
     '[data-add-task-form]'
   ) as HTMLFormElement
 
-  addTaskToListForm.addEventListener('submit', e => {
+  addTaskToListElement.addEventListener('submit', e => {
     e.preventDefault()
-    const inputAddTask = document.querySelector(
+    const input = document.querySelector(
       '[data-add-task-input]'
     ) as HTMLInputElement
 
-    fullList.addTaskToList(
-      new TaskItem(uuidv4().slice(0, 6), inputAddTask.value, false)
-    )
+    state.addTaskToList(new TaskItem(uuidv4().slice(0, 6), input.value, false))
+    input.value = ''
+    templateTasks.render(state._curretList)
   })
 
   // load data from local storage to stateP
-  fullList.load()
+  state.load()
   // render template base on local stroage data
-  templateList.render(fullList)
+  templateList.render(state)
 
-  templateTasks.render(fullList._curretList)
+  templateTasks.render(state._curretList)
+
+  console.log('🚀 ~ file: index.ts:54 ~ initApp ~ fullList', state)
+
+  // Default setting tasks section
+
+  const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
+  h2.innerText = state._curretList.item
 }
 
 document.addEventListener('DOMContentLoaded', initApp)
-
