@@ -13,14 +13,15 @@ interface List {
   setItemAndCurrentList(id: string): void
   addTaskToList(task: TaskItem): void
   saveSelectedItem(id: string): void
+  load(): void
 }
 
 // types data from LOCAL STORAGE ↓
 export type taskItemObj = { _id: string; _name: string; _completed: boolean }
 export type ListItemObj = { _id: string; _item: string; _tasks: taskItemObj[] }
 
-export class FullList implements List {
-  static instance: FullList = new FullList()
+export class State implements List {
+  static instance: State = new State()
 
   _selectedItem: string = localStorage.getItem('mySelectedItem')!
   _curretList: ListItem = new ListItem()

@@ -1,9 +1,12 @@
 import { ListItem } from '../model/ListItem'
-import { TaskItem } from '../model/TaskItem'
 
-export class TaskTemplate {
+interface DOMTasks {
+  clear(): void
+  render(taskList: ListItem): void
+}
+
+export class TaskTemplate implements DOMTasks{
   private ul: HTMLUListElement
-
   static instante: TaskTemplate = new TaskTemplate()
 
   constructor () {
@@ -12,7 +15,13 @@ export class TaskTemplate {
     ) as HTMLUListElement
   }
 
+  clear() {
+    this.ul.innerHTML = ''
+  }
+
   render (tasksList: ListItem) {
+    this.clear()
+
     tasksList.tasks.forEach((task, id) => {
       const inputEl = document.createElement('input')
       inputEl.type = 'checkbox'
@@ -27,7 +36,6 @@ export class TaskTemplate {
 
       labelEl.onclick = () => {
         task.completed = !task.completed
-        // saveToLocalStorage(todosList)
       }
 
       const customSpan = document.createElement('span')
