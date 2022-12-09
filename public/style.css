@@ -203,6 +203,7 @@ li[active-list]:not(.disable):hover {
 .todo-task-checkbox {
   position: absolute;
   opacity: 0;
+  pointer-events: none; 
 }
 
 .custom-checkbox {
