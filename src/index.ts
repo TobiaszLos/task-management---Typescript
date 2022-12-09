@@ -4,13 +4,14 @@ import { TaskItem } from './model/TaskItem'
 import { ListTemplate } from './templates/ListTemplate'
 import { TaskTemplate } from './templates/TaskTemplate'
 import { v4 as uuidv4 } from 'uuid'
+import { setTitle } from './helpers'
 
 const initApp = (): void => {
   const state = State.instance // local storage full list
   const templateList = ListTemplate.instance
   const templateTasks = TaskTemplate.instante
 
-  // Add new item to list of todos
+// -----ADD TO LIST -------- //
   const addListFormElement = document.querySelector(
     '[data-todo-form]'
   ) as HTMLFormElement
@@ -31,6 +32,7 @@ const initApp = (): void => {
     templateList.render(state)
   })
 
+// -----ADD TASK TO LIST -------- //
   const addTaskToListElement = document.querySelector(
     '[data-add-task-form]'
   ) as HTMLFormElement
@@ -43,22 +45,36 @@ const initApp = (): void => {
 
     state.addTaskToList(new TaskItem(uuidv4().slice(0, 6), input.value, false))
     input.value = ''
-    templateTasks.render(state._curretList)
+    templateList.render(state) // just to set count
+    templateTasks.render(state.currentList)
   })
+
+  // ----DELETE LIST-------- //
+  const deleteList = document.querySelector(
+    '[data-delete-list]'
+  ) as HTMLButtonElement
+
+  deleteList.addEventListener('click', () => {
+    state.findAndDeleteList(state.currentList.id)
+    templateTasks.render(state.currentList)
+    templateList.render(state)
+    
+    setTitle(state.currentList.item)
+  })
+
+  // ---- DEFAULT -------- //
 
   // load data from local storage to stateP
   state.load()
   // render template base on local stroage data
   templateList.render(state)
-
-  templateTasks.render(state._curretList)
+  console.log('state._curretList: ', state.currentList);
 
   console.log('🚀 ~ file: index.ts:54 ~ initApp ~ fullList', state)
 
   // Default setting tasks section
 
-  const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
-  h2.innerText = state._curretList.item
+  setTitle(state.currentList.item)
 }
 
 document.addEventListener('DOMContentLoaded', initApp)

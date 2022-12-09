@@ -1,3 +1,4 @@
+import { setTitle } from '../helpers'
 import { State } from '../model/state'
 import { TaskTemplate } from './TaskTemplate'
 
@@ -41,14 +42,13 @@ export class ListTemplate implements DOMList {
         state.setItemAndCurrentList(item.id)
         this.render(state)
 
-        this.tasksTemplate.render(state._curretList)
+        this.tasksTemplate.render(state.currentList)
 
         // Set TITLE in tasks section 
-        const h2 = document.querySelector('.todo-tasks-title') as HTMLElement
-        h2.innerText = item.item
+        setTitle(state.currentList.item)
       })
 
-      if (item.id === state._selectedItem) {
+      if (item.id === state.selectedItemId) {
         LiElement.setAttribute('active-list', '')
       }
 
