@@ -4,14 +4,14 @@ import { TaskItem } from './model/TaskItem'
 import { ListTemplate } from './templates/ListTemplate'
 import { TaskTemplate } from './templates/TaskTemplate'
 import { v4 as uuidv4 } from 'uuid'
-import { setTitle } from './helpers'
+import { setCount, setTitle } from './helpers'
 
 const initApp = (): void => {
   const state = State.instance // local storage full list
   const templateList = ListTemplate.instance
   const templateTasks = TaskTemplate.instante
 
-// -----ADD TO LIST -------- //
+  // -----ADD TO LIST -------- //
   const addListFormElement = document.querySelector(
     '[data-todo-form]'
   ) as HTMLFormElement
@@ -32,7 +32,7 @@ const initApp = (): void => {
     templateList.render(state)
   })
 
-// -----ADD TASK TO LIST -------- //
+  // -----ADD TASK TO LIST -------- //
   const addTaskToListElement = document.querySelector(
     '[data-add-task-form]'
   ) as HTMLFormElement
@@ -43,10 +43,14 @@ const initApp = (): void => {
       '[data-add-task-input]'
     ) as HTMLInputElement
 
-    state.addTaskToList(new TaskItem(uuidv4().slice(0, 6), input.value, false))
+    const inputValue = input.value.trim()
+
+    if (!inputValue.length) return
+
+    state.addTaskToList(new TaskItem(uuidv4().slice(0, 6), inputValue, false))
     input.value = ''
     templateList.render(state) // just to set count
-    templateTasks.render(state.currentList)
+    templateTasks.render(state)
   })
 
   // ----DELETE LIST-------- //
@@ -56,25 +60,33 @@ const initApp = (): void => {
 
   deleteList.addEventListener('click', () => {
     state.findAndDeleteList(state.currentList.id)
-    templateTasks.render(state.currentList)
+    templateTasks.render(state)
     templateList.render(state)
-    
+
     setTitle(state.currentList.item)
+    setCount(state.uncompletedTasksCount())
+  })
+
+  // ----CLEAR COMPLETED lIST ------- //
+  const clearCompletedList = document.querySelector(
+    '[data-clear-completed-tasks]'
+  ) as HTMLButtonElement
+
+  clearCompletedList.addEventListener('click', () => {
+    state.clearCompletedList()
+
+    templateTasks.render(state)
+    setCount(state.uncompletedTasksCount())
   })
 
   // ---- DEFAULT -------- //
 
-  // load data from local storage to stateP
   state.load()
-  // render template base on local stroage data
   templateList.render(state)
-  console.log('state._curretList: ', state.currentList);
-
-  console.log('🚀 ~ file: index.ts:54 ~ initApp ~ fullList', state)
-
-  // Default setting tasks section
+  templateTasks.render(state)
 
   setTitle(state.currentList.item)
+  setCount(state.uncompletedTasksCount())
 }
 
 document.addEventListener('DOMContentLoaded', initApp)

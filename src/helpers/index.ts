@@ -5,7 +5,15 @@ export const setTitle = (
   ) as HTMLElement
 ) => {
   element.innerText = value
-
 }
 
-export const setCount = () => {}
+export const setCount = (
+  value: string,
+  element: HTMLElement = document.querySelector(
+    '.todo-tasks-count'
+  ) as HTMLElement
+) => {
+  element.innerText =  `${value} tasks left`
+}
+
+// SETUP IN TASK SECTION

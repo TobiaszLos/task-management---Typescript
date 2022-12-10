@@ -6,13 +6,14 @@ interface List {
   selectedItemId: string
   currentList: ListItem
   saveList(): void
-  clearList(): void
+  clearCompletedList(): void
   addItem(item: ListItem): void
   findAndDeleteList(id: string): void
   setCurrentList(id: string): void
   setItemAndCurrentList(id: string): void
   addTaskToList(task: TaskItem): void
-  saveSelectedItem(id: string): void
+  saveSelectedItemId(id: string): void
+  uncompletedTasksCount(): string
   load(): void
 }
 
@@ -23,8 +24,8 @@ export type ListItemObj = { _id: string; _item: string; _tasks: taskItemObj[] }
 export class State implements List {
   static instance: State = new State()
 
-  _selectedItemId: string = localStorage.getItem('mySelectedItem')!
-  _currentList: ListItem = new ListItem()
+  private _selectedItemId: string = localStorage.getItem('mySelectedItem')!
+  private _currentList: ListItem = new ListItem()
 
   constructor (private _list: ListItem[] = []) {}
 
@@ -64,13 +65,8 @@ export class State implements List {
     localStorage.setItem('myTodoList', JSON.stringify(this._list))
   }
 
-  saveSelectedItem (id: string) {
+  saveSelectedItemId (id: string) {
     localStorage.setItem('mySelectedItem', id)
-  }
-
-  clearList () {
-    this._list = []
-    this.saveList()
   }
 
   addItem (item: ListItem) {
@@ -80,14 +76,14 @@ export class State implements List {
 
   findAndDeleteList (id: string) {
     this._list = this._list.filter(item => item.id !== id)
-    this._currentList = this._list[this._list.length -1]
+    this._currentList = this._list[this._list.length - 1]
     this._selectedItemId = this._currentList.id
-    this.saveSelectedItem(this._currentList.id)
+    this.saveSelectedItemId(this._currentList.id)
     this.saveList()
   }
 
   setItemAndCurrentList (id: string) {
-    this.saveSelectedItem(id)
+    this.saveSelectedItemId(id)
     this._selectedItemId = id
     this._currentList = this._list.find(item => item.id === id)!
   }
@@ -100,5 +96,17 @@ export class State implements List {
   addTaskToList (task: TaskItem) {
     this._currentList.tasks.push(task)
     this.saveList()
+  }
+
+  clearCompletedList () {
+    const filtredTasks = this._currentList.tasks.filter(task => !task.completed)
+
+    this.currentList.tasks = filtredTasks
+    this.saveList()
+  }
+
+  uncompletedTasksCount() {
+    const filtredTasks = this._currentList.tasks.filter(task => !task.completed)
+    return filtredTasks.length.toString()
   }
 }

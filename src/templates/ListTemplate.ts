@@ -1,4 +1,4 @@
-import { setTitle } from '../helpers'
+import { setCount, setTitle } from '../helpers'
 import { State } from '../model/state'
 import { TaskTemplate } from './TaskTemplate'
 
@@ -42,10 +42,12 @@ export class ListTemplate implements DOMList {
         state.setItemAndCurrentList(item.id)
         this.render(state)
 
-        this.tasksTemplate.render(state.currentList)
-
+        this.tasksTemplate.render(state)
+        
         // Set TITLE in tasks section 
         setTitle(state.currentList.item)
+        setCount(state.uncompletedTasksCount())
+        
       })
 
       if (item.id === state.selectedItemId) {

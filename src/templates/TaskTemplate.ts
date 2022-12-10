@@ -1,11 +1,13 @@
+import { setCount } from '../helpers'
 import { ListItem } from '../model/ListItem'
+import { State } from '../model/state'
 
 interface DOMTasks {
   clear(): void
-  render(taskList: ListItem): void
+  render(state: State): void
 }
 
-export class TaskTemplate implements DOMTasks{
+export class TaskTemplate implements DOMTasks {
   private ul: HTMLUListElement
   static instante: TaskTemplate = new TaskTemplate()
 
@@ -15,14 +17,14 @@ export class TaskTemplate implements DOMTasks{
     ) as HTMLUListElement
   }
 
-  clear() {
+  clear () {
     this.ul.innerHTML = ''
   }
 
-  render (tasksList: ListItem) {
+  render (state: State) {
     this.clear()
 
-    tasksList.tasks.forEach((task, id) => {
+    state.currentList.tasks.forEach((task, id) => {
       const inputEl = document.createElement('input')
       inputEl.type = 'checkbox'
       inputEl.name = ''
@@ -36,6 +38,8 @@ export class TaskTemplate implements DOMTasks{
 
       labelEl.onclick = () => {
         task.completed = !task.completed
+        state.saveList()
+        setCount(state.uncompletedTasksCount())   
       }
 
       const customSpan = document.createElement('span')
