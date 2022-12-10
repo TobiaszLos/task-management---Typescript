@@ -51,6 +51,8 @@ const initApp = (): void => {
     input.value = ''
     templateList.render(state) // just to set count
     templateTasks.render(state)
+    
+    setCount(state.uncompletedTasksCount())
   })
 
   // ----DELETE LIST-------- //
