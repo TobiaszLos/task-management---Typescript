@@ -5,6 +5,7 @@ export const setTitle = (
   ) as HTMLElement
 ) => {
   element.innerText = value
+  console.log('value: ', value);
 }
 
 export const setCount = (

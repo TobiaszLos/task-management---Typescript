@@ -51,7 +51,7 @@ const initApp = (): void => {
     input.value = ''
     templateList.render(state) // just to set count
     templateTasks.render(state)
-    
+
     setCount(state.uncompletedTasksCount())
   })
 
@@ -85,10 +85,17 @@ const initApp = (): void => {
 
   state.load()
   templateList.render(state)
-  templateTasks.render(state)
 
-  setTitle(state.currentList.item)
-  setCount(state.uncompletedTasksCount())
+  if (state.list.length) {
+    templateTasks.render(state)
+
+    setTitle(state.currentList.item)
+    setCount(state.uncompletedTasksCount())
+  } else {
+    const el = document.querySelector('.todo-tasks') as HTMLElement
+  
+    el.style.display = 'none'
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initApp)

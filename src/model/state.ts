@@ -36,9 +36,8 @@ export class State implements List {
     const parsedList: ListItemObj[] = JSON.parse(storedList)
 
     parsedList.forEach(obj => {
-      // change Local storage type data(taskItemObj)
-      // to TaskItem type model
       const newTaskItem: TaskItem[] = []
+
       obj._tasks.forEach(task => {
         newTaskItem.push(new TaskItem(task._id, task._name, task._completed))
       })
@@ -76,9 +75,13 @@ export class State implements List {
 
   findAndDeleteList (id: string) {
     this._list = this._list.filter(item => item.id !== id)
-    this._currentList = this._list[this._list.length - 1]
-    this._selectedItemId = this._currentList.id
-    this.saveSelectedItemId(this._currentList.id)
+
+    if(this._list.length !== 0) {
+      this._currentList = this._list[this._list.length - 1]
+      this._selectedItemId = this._currentList.id
+      this.saveSelectedItemId(this._currentList.id)
+    } 
+ 
     this.saveList()
   }
 
