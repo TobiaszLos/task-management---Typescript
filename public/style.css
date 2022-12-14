@@ -69,7 +69,6 @@ body {
   border: none;
   border-bottom: 1px solid var(--todo-main-color);
   color: var(--todo-main-color);
-  
 }
 
 /**
@@ -100,7 +99,7 @@ li[active-list]:not(.disable):hover {
 }
 
 .list-name span {
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .list-name:hover {
@@ -123,13 +122,13 @@ li[active-list]:not(.disable):hover {
   border: none;
   border-bottom: 1px solid var(--todo-main-color);
   color: var(--todo-main-color); */
-  
 }
 
 .btn.add-list-buttom {
   font-weight: 500;
   letter-spacing: 0.4px;
   border: 1px solid var(--todo-main-color);
+  border-radius: 2rem;
 }
 
 .todo-list-box {
@@ -152,7 +151,7 @@ li[active-list]:not(.disable):hover {
 }
 
 .todo-tasks-title {
-  font-size: 3.4rem;
+  font-size: 2.4rem;
   color: var(--todo-main-color);
   font-weight: 400;
   margin-bottom: 2rem;
@@ -203,7 +202,7 @@ li[active-list]:not(.disable):hover {
 .todo-task-checkbox {
   position: absolute;
   opacity: 0;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .custom-checkbox {
@@ -244,5 +243,26 @@ li[active-list]:not(.disable):hover {
   transform-origin: left;
 }
 
-
-
+@media screen and (max-width: 960px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+  .todo-list-container {
+    align-content: unset;
+  }
+  .todo-list-box {
+    max-height: 118px;
+    overflow-y: auto;
+  }
+  .tasks-box {
+    max-height: 118px;
+    overflow-y: auto;
+  }
+  .todo-tasks-title {
+    margin-bottom: 0;
+    font-size: 1.8rem;
+  }
+  .todo-tasks-count{
+    font-size: 1.4rem;
+  }
+}
