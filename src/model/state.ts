@@ -92,7 +92,6 @@ export class State implements List {
     this.saveSelectedItemId(id)
     this._selectedItemId = id
     this._currentList = this._list.find(item => item.id === id)!
-    console.log('this._selectedItemId: ', this._selectedItemId);
   }
 
   setCurrentList (id: string) {
