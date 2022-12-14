@@ -133,6 +133,8 @@ li[active-list]:not(.disable):hover {
 
 .todo-list-box {
   color: var(--todo-main-color);
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 /**
@@ -176,6 +178,11 @@ li[active-list]:not(.disable):hover {
 
 .todo-tasks-buttons-container {
   align-self: end;
+}
+
+.tasks-box {
+  max-height: 335px;
+  overflow-y: auto;
 }
 
 /* single task (TODO TASKS SECTION ⇩ ⇩ ⇩)*/
@@ -243,6 +250,15 @@ li[active-list]:not(.disable):hover {
   transform-origin: left;
 }
 
+
+
+
+[hidden] {
+ display: none;
+}
+
+
+
 @media screen and (max-width: 960px) {
   .wrapper {
     grid-template-columns: 1fr;
@@ -266,3 +282,4 @@ li[active-list]:not(.disable):hover {
     font-size: 1.4rem;
   }
 }
+

@@ -4,7 +4,7 @@ import { TaskItem } from './model/TaskItem'
 import { ListTemplate } from './templates/ListTemplate'
 import { TaskTemplate } from './templates/TaskTemplate'
 import { v4 as uuidv4 } from 'uuid'
-import { setCount, setTitle } from './helpers'
+import { setCount, setTitle, toggleDisplay } from './helpers'
 
 const initApp = (): void => {
   const state = State.instance // local storage full list
@@ -26,10 +26,22 @@ const initApp = (): void => {
     const inputValue = inputList.value.trim()
     if (!inputValue.length) return
 
-    state.addItem(new ListItem(uuidv4().slice(0, 6), inputValue, []))
+    const newItemList = new ListItem(uuidv4().slice(0, 6), inputValue, [])
+
+    state.addItem(newItemList)
+    state.setItemAndCurrentList(newItemList.id) // set active list
+
     inputList.value = ''
 
     templateList.render(state)
+
+    templateTasks.render(state)
+    setTitle(state.currentList.item)
+    setCount(state.uncompletedTasksCount())
+
+    if (state.list.length !== 0) {
+      toggleDisplay('show')
+    }
   })
 
   // -----ADD TASK TO LIST -------- //
@@ -67,6 +79,10 @@ const initApp = (): void => {
 
     setTitle(state.currentList.item)
     setCount(state.uncompletedTasksCount())
+
+    if (state.list.length === 0) {
+      toggleDisplay('hidden')
+    }
   })
 
   // ----CLEAR COMPLETED lIST ------- //
@@ -78,6 +94,7 @@ const initApp = (): void => {
     state.clearCompletedList()
 
     templateTasks.render(state)
+    templateList.render(state) // reRender count number in list section
     setCount(state.uncompletedTasksCount())
   })
 
@@ -92,10 +109,10 @@ const initApp = (): void => {
     setTitle(state.currentList.item)
     setCount(state.uncompletedTasksCount())
   } else {
-    const el = document.querySelector('.todo-tasks') as HTMLElement
-  
-    el.style.display = 'none'
+    toggleDisplay('hidden')
   }
+
+  console.log('state: ', state)
 }
 
 document.addEventListener('DOMContentLoaded', initApp)

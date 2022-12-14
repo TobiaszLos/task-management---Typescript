@@ -24,11 +24,6 @@ export class TaskTemplate implements DOMTasks {
   render (state: State) {
     this.clear()
     
-    if(state.currentList) {
-      console.log('aaaa')
-    } else {
-      console.log('asdfff')
-    }
     state.currentList.tasks.forEach((task, id) => {
       const inputEl = document.createElement('input')
       inputEl.type = 'checkbox'
