@@ -44,7 +44,8 @@ body {
   display: grid;
   grid-template-columns: 300px 600px;
   padding: 6rem 0;
-  border: 1px solid var(--todo-main-color);
+  /* border: 1px solid var(--todo-main-color); */
+  box-shadow: 1px 1px 5px var(--todo-main-color);
   min-height: 620px;
   border-radius: 8px;
 }
