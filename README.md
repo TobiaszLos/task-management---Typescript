@@ -1,6 +1,6 @@
 # Todo list application
 
-![sd](https://i.imgur.com/ePOZYCn.png)
+![sd](https://i.imgur.com/zyOTGYU.png)
 
 
 📺 [Link to project Live](https://delightful-muffin-433dfb.netlify.app/) 
