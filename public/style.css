@@ -164,6 +164,11 @@ li[active-list]:not(.disable):hover {
   letter-spacing: 0.3px;
 }
 
+.btn.add-task-plus{
+  font-size: 30px;
+  line-height: 30px;
+}
+
 .inputCss.add-task-input {
   /* padding: 0.7rem 1.4rem;
   color: #fff;
