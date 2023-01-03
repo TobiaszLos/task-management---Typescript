@@ -29,3 +29,5 @@ Run webpack development mode and watch
 
 * [Webpack](https://webpack.js.org/concepts/) - Module bundlers
 * [typescript](https://www.typescriptlang.org/) - Language
+* [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) - Markup language
+* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) - Style
